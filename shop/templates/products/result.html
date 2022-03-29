@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+
+{% for product in products %}
+                        <div class="rol-md-3 mt-4">
+                        <div class="product" style="width: 250px; margin-right: 20px;">
+                            {% if product.discount > 0 %}
+                                <span class="product-label label-sale">{{product.discount}}折</span>
+                            {% endif %}
+                            <figure class="product-media">
+                                <a href="#">
+                                    <img src="{{url_for('static', filename='images/' + product.image_1)}}" alt="{{product.name}}">
+                                </a>
+                            </figure>
+                            <!-- End .product-media -->
+
+                            <div class="product-body">
+                                <div class="product-cat">
+                                    by <a href="#">{{product.authors}}</a>
+                                </div>
+                                <!-- End .product-cat -->
+                                <h4 class="product-title">{{product.name}}</h4>
+                                <!-- End .product-title -->
+                                <div class="product-price">
+                                    {% if product.discount > 0 %}
+                                    {% set discount =(product.discount/100) * product.price|int %}
+                                    <span class="new-price">${{discount}}</span>
+                                    <span class="old-price">Was {{product.price|int}}</span>
+                                    {% else %}
+                                    <span class="new-price">${{product.price|int}}</span>
+                                    {% endif %}
+                                    <div class="product-action" style="margin:10px">
+                                        <a href="{{url_for('single_page',id=product.id)}}" class="btn-product"><span>Details</span></a>
+                                    </div>
+                                </div>
+                                <!-- End .product-price -->
+                            </div>
+                            <!-- End .product-body -->
+                            </div>
+                        </div>
+                        {% endfor %}
+
+      </div>
+    </div>
+</div>
+{% endblock content %}

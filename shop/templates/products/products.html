@@ -1,0 +1,184 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<main class="main">
+    <div class="bestseller-products bg-light pt-5 pb-5 mb-5">
+        <div class="block">
+            <div class="block-wrapper ">
+                <div class="container">
+                    <div class="heading heading-flex">
+                        <div class="heading-right">
+                            <a href="#" class="title-link">View more Products <i class="icon-long-arrow-right"></i></a>
+                        </div>
+                        <!-- End .heading-right -->
+                    </div>
+                    <!-- End .header-flex -->
+                        <div class="row">
+
+                        {% if get_cat_prod %}
+                        {% for get_cat in get_cat_prod.items %}
+                        <div class="rol-md-3 mt-4">
+                        <div class="product" style="width: 250px; margin-right: 20px;">
+                            {% if get_cat.discount > 0 %}
+                                <span class="product-label label-sale">Sale</span>
+                            {% endif %}
+                            <figure class="product-media">
+                                    <img src="{{url_for('static', filename='images/' + get_cat.image_1)}}" alt="{{get_cat.name}}">
+                            </figure>
+                            <!-- End .product-media -->
+
+                            <div class="product-body">
+                                <div class="product-cat">
+                                    by <a href="#">Michelle Obama</a>
+                                </div>
+                                <!-- End .product-cat -->
+                                <h4 class="product-title">{{get_cat.name}}</h4>
+                                <!-- End .product-title -->
+                                <div class="product-price">
+                                    {% if get_cat.discount > 0 %}
+                                    {% set discount =(get_cat.discount/100) * get_cat.price|int %}
+                                    <span class="new-price">${{discount}}</span>
+                                    <span class="old-price">Was {{get_cat.price|int}}</span>
+                                    {% else %}
+                                    <span class="new-price">${{get_cat.price|int}}</span>
+                                    {% endif %}
+                                    <div class="product-action">
+                                        <a href="{{url_for('single_page',id=get_cat.id)}}" class="btn-product"><span>Details</span></a>
+                                    </div>
+                                </div>
+                                <!-- End .product-price -->
+
+                                {# <div class="product-footer"> #}
+                                    <!-- End .rating-container -->
+                                    {# <div class="product-action">
+                                        <a href="{{url_for('AddCart')}}" class="btn-product btn-cart"><span>Add to cart</span></a>
+                                    </div>
+                                    <div class="product-action">
+                                        <a href="{{url_for('single_page',id=get_cat.id)}}" class="btn-product"><span>Detail</span></a>
+                                    </div> #}
+                                    <!-- End .product-action -->
+                                {# </div> #}
+                                <!-- End .product-footer -->
+                            </div>
+                            <!-- End .product-body -->
+                            </div>
+                        </div>
+                        {% endfor %}
+
+<div class="row mt-4">
+      <div class="col text-center">
+        {% if get_cat_prod.has_prev %}
+        <a href="{{url_for('get_category',id=get_cat.id, page=get_cat_prod.prev_num)}}"
+          class="btn btn-sm btn-outline-info">previus</a>
+        {% endif %}
+        {% if get_cat_prod.total > 8 %}
+        {% for page_num in get_cat_prod.iter_pages(left_edge=1, right_edge=2, left_current=1,right_current=2) %}
+        {% if page_num %}
+        {% if get_cat_prod.page == page_num %}
+        <a href="{{url_for('get_category',id=get_cat.id, page=page_num)}}" class="btn btn-sm btn-info">{{page_num}}</a>
+        {% else %}
+        <a href="{{url_for('get_category',id=get_cat.id, page=page_num)}}"
+          class="btn btn-sm btn-outline-info">{{page_num}}</a>
+        {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% if get_cat_prod.has_next %}
+        <a href="{{url_for('product_page', page=get_cat_prod.next_num)}}" class="btn btn-sm btn-outline-info">next</a>
+        {% endif %}
+      </div>
+    </div>
+
+
+
+
+                        {% else %}
+                        {% for product in products.items %}
+                        <div class="rol-md-3 mt-4">
+                        <div class="product" style="width: 250px; margin-right: 20px;">
+                            {% if product.discount > 0 %}
+                                <span class="product-label label-sale">{{product.discount}}折</span>
+                            {% endif %}
+                            <figure class="product-media">
+                                <a href="#">
+                                    <img src="{{url_for('static', filename='images/' + product.image_1)}}" alt="{{product.name}}">
+                                </a>
+                            </figure>
+                            <!-- End .product-media -->
+
+                            <div class="product-body">
+                                <div class="product-cat">
+                                    by <a href="#">{{product.authors}}</a>
+                                </div>
+                                <!-- End .product-cat -->
+                                <h4 class="product-title">{{product.name}}</h4>
+                                <!-- End .product-title -->
+                                <div class="product-price">
+                                    {% if product.discount > 0 %}
+                                    {% set discount =(product.discount/100) * product.price|int %}
+                                    <span class="new-price">${{discount}}</span>
+                                    <span class="old-price">Was {{product.price|int}}</span>
+                                    {% else %}
+                                    <span class="new-price">${{product.price|int}}</span>
+                                    {% endif %}
+                                    <div class="product-action" style="margin:10px">
+                                        <a href="{{url_for('single_page',id=product.id)}}" class="btn-product"><span>Details</span></a>
+                                    </div>
+                                </div>
+                                <!-- End .product-price -->
+                            </div>
+                            <!-- End .product-body -->
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+<div class="row mt-4">
+      <div class="col text-center">
+        {% if products.has_prev %}
+        <a href="{{url_for('product_page', page=products.prev_num)}}" class="btn btn-sm btn-outline-info">previus</a>
+        {% endif %}
+        {% if products.total> 8 %}
+        {% for page_num in products.iter_pages(left_edge=1, right_edge=2, left_current=1,right_current=2) %}
+        {% if page_num %}
+        {% if products.page == page_num %}
+        <a href="{{url_for('product_page', page=page_num)}}" class="btn btn-sm btn-info">{{page_num}}</a>
+        {% else %}
+        <a href="{{url_for('product_page', page=page_num)}}" class="btn btn-sm btn-outline-info">{{page_num}}</a>
+        {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% if products.has_next %}
+        <a href="{{url_for('product_page', page=products.next_num)}}" class="btn btn-sm btn-outline-info">next</a>
+        {% endif %}
+      </div>
+    </div>
+
+
+
+                        {% endif %}
+                        </div>
+                        <!-- End .product -->
+                    
+                            </div>
+                            <!-- End .product-body -->
+                        </div>
+                        <!-- End .product -->
+                    </div>
+                    <!-- End .owl-carousel -->
+                </div>
+                <!-- End .container -->
+            </div>
+            <!-- End .block-wrapper -->
+        </div>
+        <!-- End .block -->
+    </div>
+    <!-- End .bg-light pt-4 pb-4 -->
+</main>
+
+{% endblock %}

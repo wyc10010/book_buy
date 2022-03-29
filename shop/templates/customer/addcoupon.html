@@ -1,0 +1,33 @@
+{% extends 'layout_admin.html' %}
+{% block content %}
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Management</h1>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Add a Coupon</h6>
+                        </div>
+                              <div class="card-body">
+                              <div class="table-responsive">
+                              {% include '_messages.html' %}
+                              {% from "_formhelpers.html" import render_field %}
+                                <form action="" method="post">
+                                    {{ form.csrf_token }}
+                                    {{ render_field(form.coupon_name, class="form-control") }}
+                                    {{ render_field(form.type, class="form-control") }}
+                                    {{ render_field(form.coupon_discount, class="form-control") }}
+                                    {{ render_field(form.coupon_limit_discount, class="form-control")  }}
+                                    {{ render_field(form.quantity, class="form-control")  }}
+                                    {{ render_field(form.start_date, class="form-control")  }}
+                                    {{ render_field(form.end_date, class="form-control")  }}
+                                    <input type="submit" value="Add Coupon" class="btn btn-primary btn-user btn-block mt-3">
+                                </form>
+                              </div>
+                              </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+{% endblock content %}

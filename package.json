@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "bootstrap": "^3.4.1",
+    "chart.js": "^3.7.0"
+  }
+}

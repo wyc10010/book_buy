@@ -1,0 +1,33 @@
+
+{% extends 'layout_admin.html' %}
+{% block content %}
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Management</h1>
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Add a Category</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            {% include '_messages.html' %}
+            <div class="text-center  p-2 h3 mb-3">{% if updatecat %} Update {% else %} Add a {% endif %} Category</div>
+            <form method=post>
+                {% if updatecat %}
+                <input type="text" name="category" class="form-control" value="{{ updatecat.name }}">
+                <input type="submit" value="Update a Category" class="btn btn-info mt-3">
+                {% else %}
+                <input type="text" name="category" class="form-control">
+                <input type="submit" value="Add a Category" class="btn btn-info mt-3">
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<!-- /.container-fluid -->
+
+{% endblock content %}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% if title %}
+    <title>{{title}}</title>
+    {% else %}
+    <title>BookBuy</title>
+    {% endif %}
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="BookBuy">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{url_for('static', filename='asset/images/icons/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='asset/images/icons/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='asset/images/icons/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{url_for('static', filename='asset/images/icons/site.htm')}}l">
+    <link rel="mask-icon" href="{{url_for('static', filename='asset/images/icons/safari-pinned-tab.svg')}}" color="#666666">
+    <link rel="shortcut icon" href="{{url_for('static', filename='asset/images/icons/favicon.ico')}}">
+    <meta name="apple-mobile-web-app-title" content="BookBuy">
+    <meta name="application-name" content="BookBuy">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="{{url_for('static', filename='asset/images/icons/browserconfig.xml')}}">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="{{url_for('static', filename='asset/css/bootstrap.min.css')}}">
+
+ <!-- Main CSS File -->
+    <link rel="stylesheet" href="{{url_for('static', filename='asset/css/style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='asset/css/plugins/nouislider/nouislider.css')}}">
+</head>
+
+<body>
+
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="header-top">
+                <div class="container">
+                    <div class="header-left">
+                        <div class="header-dropdown">
+                        </div>
+                        <!-- End .header-dropdown -->
+
+                        <div class="header-dropdown">
+                        </div>
+                        <!-- End .header-dropdown -->
+                    </div>
+                    <!-- End .header-left -->
+
+                    <div class="header-right" style="margin-top: 10px; margin-bottom:10px">
+                        <ul class="top-menu">
+                            <li>
+                                <a href="#">Links</a>
+                                <ul>
+                                    <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li>
+                                    {% if current_user.is_authenticated %}
+                                    <li><a href="{{url_for('customer_logout')}}" class="nav-link">Hi, {{current_user.name}}</a><li>
+                                    <li><a href="{{url_for('customer_logout')}}" data-toggle="modal"><i class="icon-user"></i>Logout</a></li>
+                                    {% else %}
+                                    <li><a href="{{url_for('customer_login')}}" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- End .top-menu -->
+                    </div>
+                    <!-- End .header-right -->
+                </div>
+                <!-- End .container -->
+            </div>
+            <!-- End .header-top -->
+
+            <div class="header-middle sticky-header">
+                <div class="container">
+                    <div class="header-left">
+                        <button class="mobile-menu-toggler">
+                            <span class="sr-only">Toggle mobile menu</span>
+                            <i class="icon-bars"></i>
+                        </button>
+
+                        <a href="/" class="logo">
+                            <img src="{{url_for('static', filename='asset/images/bookbuy.png')}}" alt="Logo" width="100" height="100">
+                        </a>
+
+                        <nav class="main-nav">
+                            <ul class="menu sf-arrows">
+                                <li class="megamenu-container active">
+                                    <a href="/">Home</a>
+                                </li>
+                                <li>
+                                        {% for category in categories %}
+                                        <li><a href="{{url_for('get_category',id=category.id)}}">{{category.name}}</a></li>
+                                        {% endfor %}
+                                </li>
+                            </ul>
+                            <!-- End .menu -->
+                        </nav>
+                        <!-- End .main-nav -->
+                    </div>
+                    <!-- End .header-left -->
+                    <div class="header-right">
+                        <div class="#">
+                            <a href="#" class="header-search" role="button" title="Search"><i class="icon-search"></i></a>
+                            <form action="{{url_for('result')}}" method="get">
+                                <div class="header-search-wrapper">
+                                    <label for="q" class="sr-only">Search</label>
+                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
+                                </div><!-- End .header-search-wrapper -->
+                            </form>
+                        </div><!-- End .header-search -->
+                        <div class="dropdown cart-dropdown">
+                            <a href="{{url_for('getCart')}}" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                                <i class="icon-shopping-cart"></i>
+                                <span class="cart-count">({{ session['Shoppingcart']|length }})</span>
+                            </a>
+                            <!-- End .dropdown-menu -->
+                        </div>
+
+                        <!-- End .cart-dropdown -->
+                    </div>
+                    <!-- End .header-right -->
+                </div>
+                <!-- End .container -->
+            </div>
+            <!-- End .header-middle -->
+        </header>
+        <!-- End .header -->
+
+        {% block content %}
+
+        {% endblock content %}
+        <!-- End .main -->
+
+        <footer class="footer">
+            <div class="footer-bottom">
+                <div class="container">
+                    <p class="footer-copyright">Copyright © 2022 Molla Store. All Rights Reserved.</p>
+                    <!-- End .footer-copyright -->
+                </div>
+                <!-- End .container -->
+            </div>
+            <!-- End .footer-bottom -->
+        </footer>
+        <!-- End .footer -->
+    </div>
+    <!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+</body>
+
+</html>

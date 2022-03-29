@@ -1,0 +1,35 @@
+{% extends 'layout_admin.html' %}
+{% block content %}
+
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Management</h1>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Select Author To Product</h6>
+        </div>
+                <div class="card-body">
+<form action="{{url_for('addauthors_to_product')}}" method="post" enctype="multipart/form-data">
+  <label for="fname">Book</label><br>
+  <select name="product" id="product" class="form-control" required>
+  {% for product in products %}
+  <option value="{{product.id}}">{{product.name}}</option>
+  {% endfor %}
+  </select>
+
+ <hr>
+  <label for="author">Author</label>
+  <select name="author" id="author" class="form-control" required>
+  {% for author in authors %}
+  <option value="{{author.id}}">{{author.name}}</option>
+  {% endfor %}
+  </select>
+  <input type="submit" value="Select authors to Product" class="btn btn-primary btn-user btn-block mt-3">
+</form>
+
+</div>
+
+{% endblock content %}
